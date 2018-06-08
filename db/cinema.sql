@@ -1,12 +1,12 @@
 DROP TABLE tickets;
 DROP TABLE customers;
-DROP TABLE tickets;
+DROP TABLE films;
 
 
 CREATE TABLE customers (
   id SERIAL4 PRIMARY KEY,
   name VARCHAR(255),
-  founds INT4
+  funds INT4
 );
 
 CREATE TABLE films (
