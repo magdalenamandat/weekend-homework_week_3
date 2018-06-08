@@ -1,4 +1,5 @@
 require_relative("../db/sql_runner")
+require_relative("./customer")
 
 class Film
 
@@ -55,7 +56,7 @@ def show_customers()
   sql = "SELECT customers.*
   FROM customers
   INNER JOIN tickets
-  ON tickets.customer_id = customers.id
+  ON customers.id = tickets.customer_id
   WHERE tickets.film_id = $1"
   values = [@id]
   locations = SqlRunner.run(sql, values)

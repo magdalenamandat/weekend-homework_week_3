@@ -4,23 +4,26 @@ require_relative( 'models/ticket' )
 
 require( 'pry-byebug' )
 
+Ticket.delete_all()
+Film.delete_all()
 Customer.delete_all()
+
 
 customer1 = Customer.new({
   'name' => 'Bob',
-  'founds' => '100'
+  'funds' => '100'
   })
   customer1.save()
 
 customer2 = Customer.new({
   'name' => 'Kevin',
-  'founds' => '50'
+  'funds' => '50'
   })
   customer2.save()
 
 customer3 = Customer.new({
   'name' => 'Graeme',
-  'founds' => '200'
+  'funds' => '200'
   })
   customer3.save()
 
