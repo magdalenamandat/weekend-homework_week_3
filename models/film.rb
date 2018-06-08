@@ -51,4 +51,15 @@ def self.delete_all()
     SqlRunner.run(sql, values)
   end
 
+def show_customers()
+  sql = "SELECT customers.*
+  FROM customers
+  INNER JOIN tickets
+  ON tickets.customer_id = customers.id
+  WHERE tickets.film_id = $1"
+  values = [@id]
+  locations = SqlRunner.run(sql, values)
+  return Customer.map_items(locations)
+end
+
 end

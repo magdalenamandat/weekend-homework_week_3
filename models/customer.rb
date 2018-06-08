@@ -9,7 +9,7 @@ class Customer
   def initialize( options )
     @id = options['id'].to_i if options['id']
     @name = options['name']
-    @funds = options['funds']
+    @funds = options['funds'].to_i
   end
 
   def save()
@@ -42,8 +42,7 @@ end
 
 def self.delete_all()
     sql = "DELETE FROM customers"
-    values = []
-    SqlRunner.run(sql, values)
+    SqlRunner.run(sql)
   end
 
   def update
@@ -51,5 +50,16 @@ def self.delete_all()
     values = [@name, @artist_id, @id]
     SqlRunner.run(sql, values)
   end
+
+  def show_films()
+  sql = "SELECT films.*
+  FROM films
+  INNER JOIN tickets
+  ON tickets.film_id = films.id
+  WHERE customer_id = $1"
+  values = [@id]
+  locations = SqlRunner.run(sql, values)
+  return Film.map_items(locations)
+end
 
 end
