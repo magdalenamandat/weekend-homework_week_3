@@ -1,5 +1,6 @@
 require_relative("../db/sql_runner")
 require_relative("./film")
+require_relative("./ticket")
 
 class Customer
 
@@ -45,9 +46,9 @@ def self.delete_all()
     SqlRunner.run(sql)
   end
 
-  def update
-    sql = "UPDATE customers SET name = $1, funds = $2 WHERE id = $3"
-    values = [@name, @artist_id, @id]
+  def update()
+    sql = "UPDATE customers SET (name, funds) = ($1, $2) WHERE id = $3"
+    values = [@name, @funds, @id]
     SqlRunner.run(sql, values)
   end
 
@@ -61,5 +62,18 @@ def self.delete_all()
   locations = SqlRunner.run(sql, values)
   return Film.map_items(locations)
 end
+
+def buy_ticket(film)
+  if film.price() < @funds
+    @funds -= film.price()
+    update()
+    ticket = Ticket.new({'customer_id' => @id, 'film_id' => film.id})
+    ticket.save()
+    return ticket
+  end
+end
+
+
+
 
 end
