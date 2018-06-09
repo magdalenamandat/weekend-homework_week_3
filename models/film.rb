@@ -13,22 +13,22 @@ class Film
   end
 
   def save()
-      sql = "INSERT INTO films
-      (
-        title,
-        price
-      )
-      VALUES
-      (
-        $1, $2
-      )
-      RETURNING id"
-      values = [@title, @price]
-      film = SqlRunner.run( sql, values ).first
-      @id = film['id'].to_i
-    end
+    sql = "INSERT INTO films
+    (
+      title,
+      price
+    )
+    VALUES
+    (
+      $1, $2
+    )
+    RETURNING id"
+    values = [@title, @price]
+    film = SqlRunner.run( sql, values ).first
+    @id = film['id'].to_i
+  end
 
-    def self.all()
+  def self.all()
     sql = "SELECT * FROM films"
     values = []
     films = SqlRunner.run(sql, values)
@@ -37,10 +37,10 @@ class Film
   end
 
   def self.map_items(film_data)
-  return film_data.map { |film| Film.new(film)}
-end
+    return film_data.map { |film| Film.new(film)}
+  end
 
-def self.delete_all()
+  def self.delete_all()
     sql = "DELETE FROM films"
     values = []
     SqlRunner.run(sql, values)
@@ -52,17 +52,26 @@ def self.delete_all()
     SqlRunner.run(sql, values)
   end
 
-def show_customers()
-  sql = "SELECT customers.*
-  FROM customers
-  INNER JOIN tickets
-  ON customers.id = tickets.customer_id
-  WHERE tickets.film_id = $1"
-  values = [@id]
-  locations = SqlRunner.run(sql, values)
-  return Customer.map_items(locations)
-end
+  def show_customers()
+    sql = "SELECT customers.*
+    FROM customers
+    INNER JOIN tickets
+    ON customers.id = tickets.customer_id
+    WHERE tickets.film_id = $1"
+    values = [@id]
+    locations = SqlRunner.run(sql, values)
+    return Customer.map_items(locations)
+  end
 
-
+  def count_customers()
+    sql = "SELECT customers.*
+    FROM customers
+    INNER JOIN tickets
+    ON customers.id = tickets.customer_id
+    WHERE tickets.film_id = $1"
+    values = [@id]
+    locations = SqlRunner.run(sql, values)
+    return Customer.map_items(locations).length()
+  end
 
 end

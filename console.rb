@@ -49,7 +49,6 @@ film3 = Film.new({
 
 
 
-
 ticket1 = Ticket.new({
    'customer_id' => customer1.id,
    'film_id' => film1.id
