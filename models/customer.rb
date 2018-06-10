@@ -59,8 +59,8 @@ class Customer
     ON tickets.film_id = films.id
     WHERE customer_id = $1"
     values = [@id]
-    locations = SqlRunner.run(sql, values)
-    return Film.map_items(locations)
+    films = SqlRunner.run(sql, values)
+    return Film.map_items(films)
   end
 
   def buy_ticket(film) #extension
@@ -78,8 +78,8 @@ class Customer
     FROM tickets
     WHERE customer_id = $1"
     values = [@id]
-    locations = SqlRunner.run(sql, values)
-    return Ticket.map_items(locations).length()
+    tickets = SqlRunner.run(sql, values)
+    return Ticket.map_items(tickets).length()
   end
 
 end

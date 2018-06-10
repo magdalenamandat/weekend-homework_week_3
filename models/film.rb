@@ -59,8 +59,8 @@ class Film
     ON customers.id = tickets.customer_id
     WHERE tickets.film_id = $1"
     values = [@id]
-    locations = SqlRunner.run(sql, values)
-    return Customer.map_items(locations)
+    customers = SqlRunner.run(sql, values)
+    return Customer.map_items(customers)
   end
 
   def count_customers()
@@ -70,8 +70,8 @@ class Film
     ON customers.id = tickets.customer_id
     WHERE tickets.film_id = $1"
     values = [@id]
-    locations = SqlRunner.run(sql, values)
-    return Customer.map_items(locations).length()
+    customers = SqlRunner.run(sql, values)
+    return Customer.map_items(customers).length()
   end
 
 end
